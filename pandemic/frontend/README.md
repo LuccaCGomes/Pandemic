@@ -26,7 +26,7 @@ This project is a web implementation of the board game Pandemic, developed using
    ```
 2. Navigate to the frontend directory:
    ```
-   cd pandemic-game/frontend
+   cd pandemic/frontend
    ```
 3. Install dependencies:
    ```

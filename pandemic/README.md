@@ -3,46 +3,6 @@
 ## Overview
 Pandemic is a cooperative board game where players work together to stop the spread of diseases across the globe. This project implements the game as a web application using React Native for the frontend and Node.js for the backend.
 
-## Project Structure
-```
-pandemic-game
-├── backend
-│   ├── src
-│   │   ├── app.js
-│   │   ├── controllers
-│   │   │   └── gameController.js
-│   │   ├── models
-│   │   │   └── gameState.js
-│   │   ├── routes
-│   │   │   └── gameRoutes.js
-│   │   └── utils
-│   │       └── gameLogic.js
-│   ├── package.json
-│   ├── .env
-│   └── README.md
-├── frontend
-│   ├── src
-│   │   ├── App.js
-│   │   ├── components
-│   │   │   ├── Board.js
-│   │   │   ├── Card.js
-│   │   │   ├── Menu.js
-│   │   │   └── Rules.js
-│   │   ├── screens
-│   │   │   ├── GameScreen.js
-│   │   │   ├── MenuScreen.js
-│   │   │   └── RulesScreen.js
-│   │   ├── assets
-│   │   │   └── styles.css
-│   │   └── utils
-│   │       └── api.js
-│   ├── package.json
-│   ├── .env
-│   └── README.md
-├── README.md
-└── .gitignore
-```
-
 ## Technologies Used
 - **Frontend**: React Native
 - **Backend**: Node.js, Express

@@ -1,37 +1,31 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { useNavigate } from 'react-router-dom';
+import './Menu.css';
 
-const Menu = ({ navigation }) => {
+export default function Menu() {
+    const navigate = useNavigate();
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Pandemic Game</Text>
-            <Button
-                title="Iniciar Jogo"
-                onPress={() => navigation.navigate('GameScreen')}
-            />
-            <Button
-                title="Regras"
-                onPress={() => navigation.navigate('RulesScreen')}
-            />
-            <Button
-                title="Sair"
-                onPress={() => {/* Add exit functionality */}}
-            />
-        </View>
+        <div className="container">
+            <h1 className="title">Pandemic Game</h1>
+            <button
+                className="menu-button"
+                onClick={() => navigate('/game')}
+            >
+                Iniciar Jogo
+            </button>
+            <button
+                className="menu-button"
+                onClick={() => navigate('/rules')}
+            >
+                Regras
+            </button>
+            <button
+                className="menu-button"
+                onClick={() => {/* Add exit functionality */}}
+            >
+                Sair
+            </button>
+        </div>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5f5f5',
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 20,
-    },
-});
-
-export default Menu;
