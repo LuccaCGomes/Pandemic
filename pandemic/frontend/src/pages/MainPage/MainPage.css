@@ -1,0 +1,32 @@
+.main-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #1f2a38, #32465a);
+  color: white;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 3rem;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.main-buttons button {
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #00bcd4;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.main-buttons button:hover {
+  background-color: #0097a7;
+}

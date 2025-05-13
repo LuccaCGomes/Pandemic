@@ -1,10 +1,8 @@
-// backend/routes/gameRoutes.js
-
 const express = require('express');
 const router = express.Router();
-const { getGameState, postGameAction } = require('../controllers/gameController');
+const { getGameState, handleAction } = require('../controllers/gameController');
 
 router.get('/state', getGameState);
-router.post('/action', postGameAction);
+router.post('/action', handleAction);
 
 module.exports = router;

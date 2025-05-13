@@ -1,0 +1,9 @@
+.player-panel {
+  background-color: #222;
+  color: #fdfdfd;
+  padding: 15px;
+  border-top: 2px solid #333;
+}
+select, button {
+  margin-top: 10px;
+}

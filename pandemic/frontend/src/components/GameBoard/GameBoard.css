@@ -1,0 +1,32 @@
+.game-board {
+  flex: 2;
+  position: relative;
+}
+
+.game-board img {
+  width: 100%;
+  border: 2px solid #ffe81f;
+  border-radius: 8px;
+}
+
+.board {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background-image: url('/star-wars-map.jpg'); /* Coloque um mapa da galáxia */
+  background-size: cover;
+}
+
+.planet {
+  position: absolute;
+  color: white;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.threat {
+  color: yellow;
+  font-size: 12px;
+}
