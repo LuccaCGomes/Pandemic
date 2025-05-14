@@ -1,42 +1,76 @@
+const { createImperialDeck } = require('./deck');
 function initGame() {
-  const planets = {
-    'Coruscant': { threatLevel: 2, connections: ['Naboo', 'Tatooine'] },
-    'Naboo': { threatLevel: 1, connections: ['Coruscant', 'Kamino'] },
-    'Tatooine': { threatLevel: 0, connections: ['Coruscant', 'Hoth'] },
-    'Kamino': { threatLevel: 0, connections: ['Naboo'] },
-    'Hoth': { threatLevel: 1, connections: ['Tatooine'] }
-  };
-
-  const players = [
-    { name: 'Darth Vader', role: 'Executor', location: 'Coruscant', hand: [] },
-    { name: 'Grand Moff Tarkin', role: 'Comandante', location: 'Coruscant', hand: [] }
+  const planetList = [
+    {
+      name: 'Coruscant',
+      x: 600,
+      y: 150,
+      threatLevel: 2,
+      adjacent: ['Naboo', 'Tatooine']
+    },
+    {
+      name: 'Naboo',
+      x: 400,
+      y: 250,
+      threatLevel: 1,
+      adjacent: ['Coruscant', 'Kamino']
+    },
+    {
+      name: 'Tatooine',
+      x: 650,
+      y: 400,
+      threatLevel: 0,
+      adjacent: ['Coruscant', 'Hoth']
+    },
+    {
+      name: 'Kamino',
+      x: 300,
+      y: 400,
+      threatLevel: 0,
+      adjacent: ['Naboo']
+    },
+    {
+      name: 'Hoth',
+      x: 800,
+      y: 500,
+      threatLevel: 1,
+      adjacent: ['Tatooine']
+    }
   ];
 
-  const playerDeck = shuffleDeck([
-    'Coruscant', 'Naboo', 'Tatooine', 'Kamino', 'Hoth',
-    'Iniciativa Secreta', 'Ataque Orbital', 'Interceptação Rápida'
-  ]);
+  const deck = createImperialDeck();
+
+  const players = playerConfigs.map(({ name, role }) => ({
+    name,
+    role,
+    location: 'Coruscant',
+    cards: []
+  }));
+
+  
 
   players.forEach(player => {
-    player.hand.push(playerDeck.pop(), playerDeck.pop());
+    let count = 0;
+    while (count < 2 && deck.length > 0) {
+      const card = deck.pop();
+      if (card.type !== 'rebellion') {
+        player.cards.push(card);
+        count++;
+      } else {
+        deck.unshift(card);
+      }
+    }
   });
 
   return {
-    planets,
+    planets: planetList,
     players,
-    playerDeck,
+    deck,
     currentPlayer: 0,
     log: ['O Império começa sua ofensiva contra os rebeldes!'],
-    turn: 1
+    turn: 1,
+    remainingThreats: planetList.reduce((sum, p) => sum + p.threatLevel, 0)
   };
-}
-
-function shuffleDeck(deck) {
-  for (let i = deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [deck[i], deck[j]] = [deck[j], deck[i]];
-  }
-  return deck;
 }
 
 module.exports = initGame;

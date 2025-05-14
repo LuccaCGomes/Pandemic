@@ -1,4 +1,3 @@
-// components/Menu.jsx
 import React from 'react';
 
 function Menu({ game }) {

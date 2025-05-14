@@ -1,10 +1,11 @@
 .main-container {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, #1f2a38, #32465a);
+  background: url('../../../assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: white;
   text-align: center;
 }
@@ -13,6 +14,41 @@
   font-size: 3rem;
   margin-bottom: 40px;
   font-weight: bold;
+}
+
+.main-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.main-buttons label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.main-buttons input[type="number"] {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 60px;
+  text-align: center;
+}
+
+.main-buttons input[type="text"] {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 5px;
+  width: 200px;
+}
+
+.main-buttons div {
+  display: flex;
+  gap: 10px;
 }
 
 .main-buttons button {
@@ -29,4 +65,76 @@
 
 .main-buttons button:hover {
   background-color: #0097a7;
+}
+
+.player-count-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.player-count-button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: 2px solid #00bcd4;
+  border-radius: 6px;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.player-count-button.active {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.player-count-button:hover {
+  background-color: #0097a7;
+  color: white;
+}
+
+.player-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.player-name-input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.player-name-input:focus {
+  outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+}
+
+.player-role-select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.player-role-select:focus {
+  outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
 }

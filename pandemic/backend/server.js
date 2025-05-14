@@ -7,9 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-let gameState = initGame();
+app.locals.gameState = null;
 app.use((req, res, next) => {
-  req.gameState = gameState;
+  req.gameState = req.app.locals.gameState;
   next();
 });
 

@@ -44,7 +44,6 @@ function handleAction(req, res) {
       if (cardIndex !== -1) {
         const card = player.hand.splice(cardIndex, 1)[0];
         message = `${player.name} utilizou a carta "${card}".`;
-        // Lógica personalizada para cada tipo de carta pode ser adicionada aqui
       } else {
         return res.status(400).json({ error: 'Carta não encontrada.' });
       }

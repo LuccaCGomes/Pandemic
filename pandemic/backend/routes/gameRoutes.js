@@ -5,4 +5,11 @@ const { getGameState, handleAction } = require('../controllers/gameController');
 router.get('/state', getGameState);
 router.post('/action', handleAction);
 
+router.post('/start', (req, res) => {
+    const { players } = req.body;
+    req.app.locals.gameState = initGame(players);
+    res.status(200).json({ message: 'Jogo iniciado' });
+  });
+  
+
 module.exports = router;

@@ -1,32 +1,49 @@
-.game-board {
-  flex: 2;
-  position: relative;
-}
-
-.game-board img {
-  width: 100%;
-  border: 2px solid #ffe81f;
-  border-radius: 8px;
-}
-
-.board {
+.board-container {
   position: relative;
   width: 100%;
   height: 600px;
-  background-image: url('/star-wars-map.jpg'); /* Coloque um mapa da galáxia */
-  background-size: cover;
+  overflow: hidden;
+  border: 2px solid #333;
+  background-color: black;
+}
+
+.board-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  z-index: 0;
+}
+
+.connections {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .planet {
   position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 6px 8px;
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
-  padding: 4px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 2px solid white;
+  border-radius: 50%;
   cursor: pointer;
+  z-index: 2;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.planet:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .threat {
-  color: yellow;
-  font-size: 12px;
+  display: block;
+  color: red;
+  font-weight: bold;
+  font-size: 0.7rem;
 }
