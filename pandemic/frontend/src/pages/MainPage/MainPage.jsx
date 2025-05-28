@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import empireLogo from '../../../assets/empireLogo.svg';
+import starwarsLogo from '../../../assets/starwarsLogo.svg';
 import './MainPage.css';
 
 function MainPage() {
@@ -41,46 +43,60 @@ function MainPage() {
     }
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="main-container">
-      <h1 className="main-title">Star Wars Pandemic</h1>
-      <div className="main-buttons">
-        <label>Quantidade de jogadores:</label>
-        <div className="player-count-buttons">
-          {[2, 3, 4].map((value) => (
-            <button
-              key={value}
-              className={`player-count-button ${numPlayers === value ? 'active' : ''}`}
-              onClick={() => handleNumPlayersChange(value)}
-            >
-              {value}
-            </button>
-          ))}
-        </div>
-        {players.map((p, i) => (
-          <div key={i} className="player-input-container">
-            <input
-              className="player-name-input"
-              placeholder={`Nome do Jogador ${i + 1}`}
-              value={p.name}
-              onChange={(e) => handleChange(i, 'name', e.target.value)}
-            />
-            <select
-              className="player-role-select"
-              value={p.role}
-              onChange={(e) => handleChange(i, 'role', e.target.value)}
-            >
-              <option value="">Escolha uma função</option>
-              {availableRoles.map((role, index) => (
-                <option key={index} value={role}>
-                  {role}
-                </option>
+      <img src={starwarsLogo} alt="Star Wars Logo" className="starwars-logo" />
+      <h1 className="main-title">Supremacia Imperial</h1>
+      <img src={empireLogo} alt="Empire Logo" className="empire-logo" />
+      <button className="open-modal-button" onClick={() => setIsModalOpen(true)}>
+        Iniciar Jogo
+      </button>
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <button className="close-modal-button" onClick={() => setIsModalOpen(false)}>
+            X
+          </button>
+          <div className="modal-content">
+            <label>Quantidade de jogadores:</label>
+            <div className="player-count-buttons">
+              {[2, 3, 4].map((value) => (
+                <button
+                  key={value}
+                  className={`player-count-button ${numPlayers === value ? 'active' : ''}`}
+                  onClick={() => handleNumPlayersChange(value)}
+                >
+                  {value}
+                </button>
               ))}
-            </select>
+            </div>
+            {players.map((p, i) => (
+              <div key={i} className="player-input-container">
+                <input
+                  className="player-name-input"
+                  placeholder={`Nome do Jogador ${i + 1}`}
+                  value={p.name}
+                  onChange={(e) => handleChange(i, 'name', e.target.value)}
+                />
+                <select
+                  className="player-role-select"
+                  value={p.role}
+                  onChange={(e) => handleChange(i, 'role', e.target.value)}
+                >
+                  <option value="">Escolha uma função</option>
+                  {availableRoles.map((role, index) => (
+                    <option key={index} value={role}>
+                      {role}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+            <button onClick={startGame}>Iniciar Jogo</button>
           </div>
-        ))}
-        <button onClick={startGame}>Iniciar Jogo</button>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
