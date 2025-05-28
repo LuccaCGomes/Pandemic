@@ -34,46 +34,6 @@
 }
 
 
-.planet {
-  position: absolute;
-  padding: 8px 12px;
-  background: rgba(30, 30, 30, 0.9);
-  border: 2px solid white;
-  border-radius: 8px;
-  color: #00e0ff;
-  font-weight: bold;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 2;
-}
-
-.planet:hover {
-  background: rgba(0, 255, 255, 0.2);
-  border-color: #00e0ff;
-  box-shadow: 0 0 12px #00e0ff;
-}
-
-.threat {
-  display: block;
-  margin-top: 4px;
-  color: #ff4444;
-  font-size: 0.8em;
-  font-weight: bold;
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.6;
-  }
-}
-
 .ingame-cards {
   display: flex;
   justify-content: center;
@@ -108,5 +68,5 @@ button {
 button:focus {
   outline: none;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+/* 
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap'); */

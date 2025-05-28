@@ -1,42 +1,7 @@
 const { createImperialDeck } = require('../utils/deck');
 function initGame(players) {
-  const planetList = [
-    {
-      name: 'Coruscant',
-      x: 600,
-      y: 150,
-      threatLevel: 2,
-      adjacent: ['Naboo', 'Tatooine']
-    },
-    {
-      name: 'Naboo',
-      x: 400,
-      y: 250,
-      threatLevel: 1,
-      adjacent: ['Coruscant', 'Kamino']
-    },
-    {
-      name: 'Tatooine',
-      x: 650,
-      y: 400,
-      threatLevel: 0,
-      adjacent: ['Coruscant', 'Hoth']
-    },
-    {
-      name: 'Kamino',
-      x: 300,
-      y: 400,
-      threatLevel: 0,
-      adjacent: ['Naboo']
-    },
-    {
-      name: 'Hoth',
-      x: 800,
-      y: 500,
-      threatLevel: 1,
-      adjacent: ['Tatooine']
-    }
-  ];
+
+  const planetList = require('../game/planets');
 
   const deck = createImperialDeck();
 

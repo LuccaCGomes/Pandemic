@@ -3,9 +3,11 @@ import './Card.css';
 
 export default function Card({ card }) {
   return (
-    <div className="custom-card">
-      <div className="card-type">{card.type.toUpperCase()}</div>
-      <div className="card-name">{card.name}</div>
+    <div className={`custom-card card-${card.color || 'default'}`}>
+      <div className="card-type">{card.type?.toUpperCase() || 'FROTA'}</div>
+      <div className="card-name">{card.name || card.planeta}</div>
+      {card.efeito && <div className="card-effect">{card.efeito}</div>}
+      {card.regiao && <div className="card-region">{card.regiao}</div>}
     </div>
   );
 }
