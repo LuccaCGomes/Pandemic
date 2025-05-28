@@ -1,5 +1,5 @@
-const { createImperialDeck } = require('./deck');
-function initGame() {
+const { createImperialDeck } = require('../utils/deck');
+function initGame(players) {
   const planetList = [
     {
       name: 'Coruscant',
@@ -40,7 +40,7 @@ function initGame() {
 
   const deck = createImperialDeck();
 
-  const players = playerConfigs.map(({ name, role }) => ({
+  const gamePlayers = players.map(({ name, role }) => ({
     name,
     role,
     location: 'Coruscant',
@@ -48,8 +48,7 @@ function initGame() {
   }));
 
   
-
-  players.forEach(player => {
+  gamePlayers.forEach(player => {
     let count = 0;
     while (count < 2 && deck.length > 0) {
       const card = deck.pop();
@@ -64,9 +63,9 @@ function initGame() {
 
   return {
     planets: planetList,
-    players,
+    players: gamePlayers,
     deck,
-    currentPlayer: 0,
+    currentPlayerIndex: 0,
     log: ['O Império começa sua ofensiva contra os rebeldes!'],
     turn: 1,
     remainingThreats: planetList.reduce((sum, p) => sum + p.threatLevel, 0)

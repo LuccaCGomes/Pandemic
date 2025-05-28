@@ -21,12 +21,24 @@ function MainPage() {
   };
 
   const startGame = async () => {
-    const response = await fetch('http://localhost:3001/game/start', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ players }),
-    });
-    if (response.ok) navigate('/game');
+    try {
+      const response = await fetch('http://localhost:3001/game/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ players }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao iniciar o jogo');
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+      navigate('/game');
+    } catch (error) {
+      console.error('Erro:', error);
+      alert('Não foi possível iniciar o jogo. Verifique os dados e tente novamente.');
+    }
   };
 
   return (

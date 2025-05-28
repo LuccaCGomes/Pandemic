@@ -12,7 +12,6 @@ function GamePage() {
     fetch('http://localhost:3001/game/state')
       .then(res => res.json())
       .then(data => {
-        console.log("Resposta do backend:", data);
         setGame(data);
       })
       .catch(err => console.error("Erro ao buscar o estado do jogo:", err));
