@@ -1,0 +1,19 @@
+.menu {
+  background-color: #111;
+  color: #f0f0f0;
+  padding: 10px;
+  border-bottom: 2px solid #444;
+}
+
+.menu button {
+  background-color: #222;
+  color: #ffe81f;
+  border: 1px solid #ffe81f;
+  padding: 10px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.menu button:hover {
+  background-color: #444;
+}

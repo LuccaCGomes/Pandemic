@@ -1,0 +1,25 @@
+.custom-card {
+    width: 96px;
+    height: 144px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .card-type {
+    font-size: 0.75rem;
+    color: #4b5563;
+  }
+  
+  .card-name {
+    font-size: 0.875rem;  
+    font-weight: bold;
+    text-align: center;
+  }
+  
