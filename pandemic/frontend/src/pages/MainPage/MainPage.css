@@ -1,0 +1,241 @@
+.main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  text-align: center;
+}
+
+.main-title {
+  color: #FF0000;
+  font-size: 3rem;
+  font-weight: medium;
+  margin-bottom: 40px;
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.starwars-logo {
+  width: 762px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.empire-logo {
+  width: 388px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.main-buttons label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #FF0000;
+}
+
+.main-buttons input[type="number"],
+.main-buttons input[type="text"] {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #FF0000;
+  border-radius: 4px;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+.main-buttons input[type="number"]:focus,
+.main-buttons input[type="text"]:focus {
+  outline: none;
+  border-color: #FF4444;
+  box-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+}
+
+.main-buttons div {
+  display: flex;
+  gap: 10px;
+}
+
+.main-buttons button {
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #FF0000;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.main-buttons button:hover {
+  background-color: #FF4444;
+}
+
+.player-count-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.player-count-button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: 2px solid #FF0000;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.player-count-button.active {
+  background-color: #FF0000;
+  color: white;
+}
+
+.player-count-button:hover {
+  background-color: #FF4444;
+  color: white;
+}
+
+.player-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(255, 0, 0, 0.3);
+  width: 300px;
+}
+
+.player-name-input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #FF0000;
+  border-radius: 4px;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+
+.player-name-input:focus {
+  outline: none;
+  border-color: #FF4444;
+  box-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+}
+
+.player-role-select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #FF0000;
+  border-radius: 4px;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+
+.player-role-select:focus {
+  outline: none;
+  border-color: #FF4444;
+  box-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: black;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  color: white;
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 35px;
+  right: 50px;
+  background-color: transparent;
+  border: #FF0000 2px solid;
+  padding: 20px 40px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold ;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-modal-button:hover {
+  background-color: #FF4444;
+  transform: scale(1.05);
+}
+
+.open-modal-button {
+  padding: 25px 45px;
+  font-size: 2.5rem;
+  font-weight: medium;
+  color: #FF0000;
+  background-color: black;
+  border: 2px solid currentColor;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.open-modal-button:hover {
+  background-color: #FF4444;
+  transform: scale(1.05);
+}
+
+.modal-content label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  display: block;
+  color: #FF0000;
+}
+
+.modal-content button {
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background-color: transparent;
+  border: #FF0000 2px solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.modal-content button:hover {
+  background-color: #FF4444;
+  transform: scale(1.05);
+}

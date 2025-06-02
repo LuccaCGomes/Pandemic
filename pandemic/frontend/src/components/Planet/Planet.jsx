@@ -1,0 +1,23 @@
+import React from 'react';
+import './Planet.css';
+
+const Planet = ({ planet, onClick }) => {
+  return (
+    <div
+      className="planet"
+      style={{
+        left: `${planet.x}px`,
+        top: `${planet.y}px`,
+        borderColor: planet.threatLevel > 0 ? 'red' : 'white'
+      }}
+      onClick={() => onClick(planet.name)}
+    >
+      {planet.name}
+      {planet.threatLevel > 0 && (
+        <span className="threat">⚠ {planet.threatLevel}</span>
+      )}
+    </div>
+  );
+};
+
+export default Planet;
