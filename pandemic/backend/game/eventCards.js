@@ -1,4 +1,5 @@
-const imperialEventCards = [
+const eventCards = {
+  eventoImperial: [
     {
       nome: "Ordem 66",
       efeito: "Remove 1 cubo de até 3 planetas diferentes."
@@ -23,6 +24,34 @@ const imperialEventCards = [
       nome: "Moff Tarkin",
       efeito: "Remove todos os cubos de um planeta e constrói uma base lá."
     }
-  ];
+  ],
 
-  module.exports = imperialEventCards;
+  levanteRebelde: [
+  {
+    nome: "Explosão em Lothal",
+    efeito: "Adicione 3 cubos de rebelião em Lothal."
+  },
+  {
+    nome: "Roubo de Dados Imperiais",
+    efeito: "Revele as próximas 2 cartas de propagação e adicione 1 cubo de rebelião em cada planeta revelado."
+  },
+  {
+    nome: "Base Secreta Descoberta",
+    efeito: "Escolha uma orla. Adicione 1 cubo de rebelião em cada planeta dessa orla."
+  },
+  {
+    nome: "Ajuda dos Jedi Remanescentes",
+    efeito: "Escolha 1 planeta com cubos de rebelião. Adicione 2 cubos nesse planeta."
+  },
+  {
+    nome: "Incitação em Tatooine",
+    efeito: "Adicione 1 cubo de rebelião em Tatooine e em todos os planetas conectados a ele."
+  },
+  {
+    nome: "Recrutamento Rebelde em Massa",
+    efeito: "Escolha 3 planetas com cubos de rebelião. Adicione 1 cubo em cada um."
+  }
+]
+};
+
+module.exports = eventCards;
