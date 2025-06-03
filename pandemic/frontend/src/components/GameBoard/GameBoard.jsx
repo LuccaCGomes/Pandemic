@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Card from '../../components/Card/Card';
 import Planet from '../../components/Planet/Planet';
-import backgroundImage from '../../../assets/background.jpg';
+import backgroundImage from '../../assets/background.jpg';
 import './GameBoard.css';
 
 function GameBoard({ game, action, setAction }) {
