@@ -17,3 +17,10 @@
 .menu button:hover {
   background-color: #444;
 }
+
+.square {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  margin: 0 auto;
+}

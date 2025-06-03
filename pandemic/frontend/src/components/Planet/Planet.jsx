@@ -2,13 +2,22 @@ import React from 'react';
 import './Planet.css';
 
 const Planet = ({ planet, onClick }) => {
+  console.log(planet)
+
+  const planetColors = {
+    'Deep Core': 'white',
+    'Inner Rim': 'red',
+    'Mid Rim': 'blue',
+    'Outer Rim': 'yellow',
+  };
+
   return (
     <div
       className="planet"
       style={{
         left: `${planet.x}px`,
         top: `${planet.y}px`,
-        borderColor: planet.threatLevel > 0 ? 'red' : 'white'
+        borderColor: `${planetColors[planet.region]}`,
       }}
       onClick={() => onClick(planet.name)}
     >

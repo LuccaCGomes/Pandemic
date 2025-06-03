@@ -5,7 +5,7 @@
   padding: 20px;
   color: #00e0ff;
   font-family: 'Orbitron', sans-serif;
-  width: 300px;
+  width: 100%;
   box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
 }
 
@@ -22,12 +22,6 @@
   color: #ccc;
 }
 
-.player-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 10px 0 20px;
-}
 
 .card {
   background: #1a1a1a;

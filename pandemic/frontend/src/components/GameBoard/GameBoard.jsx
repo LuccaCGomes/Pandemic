@@ -1,73 +1,73 @@
 import React, { useRef, useEffect } from 'react';
 import Card from '../../components/Card/Card';
 import Planet from '../../components/Planet/Planet';
+import Deck from '../../components/Deck/Deck';
+import Settings from '../../components/Settings/Settings';
 import backgroundImage from '../../assets/background.jpg';
 import './GameBoard.css';
 
-function GameBoard({ game, action, setAction }) {
+function GameBoard({ game, action, setAction, setGame }) {
   const { planets } = game;
   console.log('GameBoard planets:', planets);
   const { players, currentPlayerIndex, deck } = game;
   const currentPlayer = players[currentPlayerIndex];
   const [showSettings, setShowSettings] = React.useState(false);
 
-  // Ref for the canvas element
   const canvasRef = useRef(null);
 
   function arrangePlanetsByRegion(planets) {
     const centerX = 800;
     const centerY = 400;
 
-    // Posições pré-definidas baseadas no layout do Figma
     const predefinedPositions = {
       // Deep Core (centro - vermelho)
       'deep-core': [
-        { x: centerX - 50, y: centerY - 30 },
-        { x: centerX + 20, y: centerY - 50 },
-        { x: centerX - 30, y: centerY + 40 },
-        { x: centerX + 40, y: centerY + 20 },
+        { x: centerX - 120, y: centerY - 100 },
+        { x: centerX + 90, y: centerY - 120 },
+        { x: centerX - 100, y: centerY + 110 },
+        { x: centerX + 110, y: centerY + 90 },
         { x: centerX, y: centerY },
-        { x: centerX - 70, y: centerY },
-        { x: centerX + 60, y: centerY - 20 }
+        { x: centerX - 140, y: centerY },
+        { x: centerX + 130, y: centerY - 70 }
       ],
 
       // Inner Rim (próximo ao centro - branco)
       'inner-rim': [
-        { x: centerX - 120, y: centerY - 80 },
-        { x: centerX + 100, y: centerY - 100 },
-        { x: centerX - 100, y: centerY + 100 },
-        { x: centerX + 120, y: centerY + 80 },
-        { x: centerX, y: centerY - 120 },
-        { x: centerX, y: centerY + 120 },
-        { x: centerX - 140, y: centerY + 40 },
-        { x: centerX + 140, y: centerY - 40 }
+        { x: centerX - 240, y: centerY - 180 },
+        { x: centerX + 220, y: centerY - 220 },
+        { x: centerX - 220, y: centerY + 220 },
+        { x: centerX + 240, y: centerY + 180 },
+        { x: centerX, y: centerY - 240 },
+        { x: centerX, y: centerY + 240 },
+        { x: centerX - 260, y: centerY + 120 },
+        { x: centerX + 260, y: centerY - 120 }
       ],
 
       // Mid Rim (meio - azul)
       'mid-rim': [
-        { x: centerX - 200, y: centerY - 120 },
-        { x: centerX + 180, y: centerY - 140 },
-        { x: centerX - 180, y: centerY + 140 },
-        { x: centerX + 200, y: centerY + 120 },
-        { x: centerX - 80, y: centerY - 180 },
-        { x: centerX + 80, y: centerY + 180 },
-        { x: centerX - 220, y: centerY + 20 },
-        { x: centerX + 220, y: centerY - 20 },
-        { x: centerX, y: centerY - 200 }
+        { x: centerX - 400, y: centerY - 270 },
+        { x: centerX + 370, y: centerY - 300 },
+        { x: centerX - 370, y: centerY + 300 },
+        { x: centerX + 400, y: centerY + 270 },
+        { x: centerX - 200, y: centerY - 370 },
+        { x: centerX + 200, y: centerY + 370 },
+        { x: centerX - 430, y: centerY + 100 },
+        { x: centerX + 430, y: centerY - 100 },
+        { x: centerX, y: centerY - 400 }
       ],
 
       // Outer Rim (externo - amarelo)
       'outer-rim': [
-        { x: centerX - 300, y: centerY - 160 },
-        { x: centerX + 280, y: centerY - 180 },
-        { x: centerX - 280, y: centerY + 180 },
-        { x: centerX + 300, y: centerY + 160 },
-        { x: centerX - 150, y: centerY - 250 },
-        { x: centerX + 150, y: centerY + 250 },
-        { x: centerX - 320, y: centerY },
-        { x: centerX + 320, y: centerY },
-        { x: centerX, y: centerY - 280 },
-        { x: centerX, y: centerY + 280 }
+        { x: centerX - 600, y: centerY - 330 },
+        { x: centerX + 570, y: centerY - 360 },
+        { x: centerX - 570, y: centerY + 360 },
+        { x: centerX + 600, y: centerY + 330 },
+        { x: centerX - 330, y: centerY - 490 },
+        { x: centerX + 330, y: centerY + 490 },
+        { x: centerX - 640, y: centerY },
+        { x: centerX + 640, y: centerY },
+        { x: centerX, y: centerY - 560 },
+        { x: centerX, y: centerY + 560 }
       ]
     };
 
@@ -78,7 +78,6 @@ function GameBoard({ game, action, setAction }) {
       'outer-rim': []
     };
 
-    // Agrupa planetas por região
     planets.forEach(p => {
       const regionKey = p.region?.toLowerCase().replace(/\s+/g, '-');
       if (regions[regionKey]) {
@@ -127,8 +126,30 @@ function GameBoard({ game, action, setAction }) {
     return arranged;
   }
 
+  async function handleDrawAction() {
+    try {
+      const response = await fetch('http://localhost:3001/game/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'draw' })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        alert(error.error || 'Erro ao comprar carta.');
+        return;
+      }
+
+      const updatedGame = await response.json();
+      console.log('Jogo atualizado após comprar carta:', updatedGame);
+      // setGame(updatedGame);
+    } catch (error) {
+      console.error('Erro ao comprar carta:', error);
+      alert('Erro ao se comunicar com o servidor.');
+    }
+  }
+
   const arrangedPlanets = arrangePlanetsByRegion(planets);
-  console.log('Arranged Planets:', arrangedPlanets);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -142,9 +163,9 @@ function GameBoard({ game, action, setAction }) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.lineWidth = 3;
+    ctx.setLineDash([]);
 
     arrangedPlanets.forEach((planet) => {
       planet.adjacent.forEach((neighborName) => {
@@ -179,26 +200,20 @@ function GameBoard({ game, action, setAction }) {
         ))}
       </div>
 
-      <div className="flex flex-col h-screen bg-gradient-to-b from-zinc-800 to-zinc-900 text-white">
-        <div className="flex-grow flex items-center justify-center relative">
-          <div className="text-center">
-            <button
-              // Assuming onDrawCard function exists elsewhere or is passed via props
-              onClick={() => { /* onDrawCard(currentPlayerIndex) */ }}
-              className="bg-yellow-600 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md"
-            >
-              Comprar Carta
-            </button>
-            <p className="mt-2 text-sm text-zinc-400">Cartas restantes: {deck.length}</p>
+      <div className="action-panel">
+        <div className="draw-section">
+          <div className="deck">
+            <Deck remainingCards={deck.length} />
           </div>
-
-          <button
-            onClick={() => setShowSettings(true)}
-            className="absolute top-4 right-4 bg-zinc-700 hover:bg-zinc-600 p-2 rounded-full shadow-lg"
-          >
-            <p>Settings</p>
+          <button onClick={handleDrawAction} className="draw-button">
+            Comprar Carta
           </button>
+          <p className="deck-counter">Cartas restantes: {deck.length}</p>
         </div>
+
+        <button className="settings-button" onClick={() => setShowSettings(true)}>
+          Configurações
+        </button>
 
         {/* <div className="ingame-cards">
           {currentPlayer.cards.map((card, index) => (
@@ -210,7 +225,7 @@ function GameBoard({ game, action, setAction }) {
 
         {showSettings && <Settings onClose={() => setShowSettings(false)} />}
       </div>
-    </div>
+    </div >
   );
 }
 

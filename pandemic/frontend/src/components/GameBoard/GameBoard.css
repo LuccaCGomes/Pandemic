@@ -1,7 +1,8 @@
 .board-container {
   position: relative;
+  padding-top: 100px;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   background: radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
   font-family: 'Orbitron', sans-serif;
@@ -33,6 +34,62 @@
   pointer-events: none;
 }
 
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(to bottom, #27272a, #18181b);
+  color: white;
+}
+
+.action-panel {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.draw-section {
+  text-align: center;
+}
+
+.draw-button {
+  background-color: #ca8a04;
+  color: white;
+  padding: 8px 16px;
+  z-index: 2;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.draw-button:hover {
+  background-color: #facc15;
+}
+
+.deck-counter {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: #a1a1aa;
+}
+
+.settings-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #3f3f46;
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  border: none;
+  cursor: pointer;
+}
+
+.settings-button:hover {
+  background-color: #52525b;
+}
 
 .ingame-cards {
   display: flex;

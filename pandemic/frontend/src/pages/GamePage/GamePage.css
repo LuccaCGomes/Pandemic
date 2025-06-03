@@ -16,7 +16,6 @@
   align-items: flex-start;
 }
 
-/* Responsividade para telas menores */
 @media (max-width: 768px) {
   .game-content {
     flex-direction: column;
@@ -25,7 +24,6 @@
   }
 }
 
-/* Feedback de carregamento */
 .game-container > div {
   color: #00e0ff;
   font-size: 1.2em;

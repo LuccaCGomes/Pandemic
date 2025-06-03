@@ -1,0 +1,99 @@
+.modal-overlay {
+    position: fixed; /* Cobre toda a tela */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente */
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    z-index: 1000; /* Garante que o modal fique na frente de outros elementos */
+    font-family: 'Orbitron', sans-serif; /* Usando a fonte do GameBoard como exemplo */
+  }
+  
+  .modal-content {
+    background-color: #1e1e2f; /* Um fundo escuro temático */
+    color: #e0e0e0; /* Texto claro */
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    min-width: 300px;
+    max-width: 500px;
+    z-index: 1001;
+    border: 1px solid #00e0ff; /* Borda neon para combinar com o GameBoard */
+    animation: fadeInModal 0.3s ease-out;
+  }
+  
+  @keyframes fadeInModal {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #3a3a5a;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .modal-title {
+    margin: 0;
+    font-size: 1.8em;
+    color: #00e0ff;
+  }
+  
+  .modal-close-button {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #a0a0c0;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+  
+  .modal-close-button:hover {
+    color: #ffffff;
+  }
+  
+  .modal-body {
+    margin-bottom: 20px;
+    font-size: 1em;
+    line-height: 1.6;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 15px;
+    border-top: 1px solid #3a3a5a;
+  }
+  
+  .modal-action-button {
+    background-color: #ca8a04;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: 'Orbitron', sans-serif;
+    transition: background-color 0.2s ease;
+  }
+  
+  .modal-action-button:hover {
+    background-color: #facc15;
+  }
+  
+  .modal-action-button:focus {
+    outline: 2px solid #fde047;
+  }

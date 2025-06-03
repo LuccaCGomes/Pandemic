@@ -42,8 +42,8 @@ function GamePage() {
     <div className="game-container">
       <Menu game={game} />
       <div className="game-content">
-        <GameBoard game={game} action={action} setAction={setAction} />
-        {/* <PlayerPanel game={game} action={action} setAction={setAction} sendAction={sendAction} /> */}
+        <GameBoard game={game} setGame={setGame} action={action} setAction={setAction} />
+        <PlayerPanel game={game} action={action} setAction={setAction} sendAction={sendAction} />
       </div>
     </div>
   );
