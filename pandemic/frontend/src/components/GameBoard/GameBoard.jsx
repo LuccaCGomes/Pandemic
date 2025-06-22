@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Card from '../../components/Card/Card';
 import Planet from '../../components/Planet/Planet';
 import Deck from '../../components/Deck/Deck';
@@ -8,19 +8,18 @@ import './GameBoard.css';
 
 function GameBoard({ game, action, setAction, setGame }) {
   const { planets } = game;
-  console.log('GameBoard planets:', planets);
   const { players, currentPlayerIndex, deck } = game;
   const currentPlayer = players[currentPlayerIndex];
-  const [showSettings, setShowSettings] = React.useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const canvasRef = useRef(null);
+  const overlayRef = useRef(null);
 
   function arrangePlanetsByRegion(planets) {
     const centerX = 800;
     const centerY = 400;
 
     const predefinedPositions = {
-      // Deep Core (centro - vermelho)
       'deep-core': [
         { x: centerX - 120, y: centerY - 100 },
         { x: centerX + 90, y: centerY - 120 },
@@ -30,8 +29,6 @@ function GameBoard({ game, action, setAction, setGame }) {
         { x: centerX - 140, y: centerY },
         { x: centerX + 130, y: centerY - 70 }
       ],
-
-      // Inner Rim (próximo ao centro - branco)
       'inner-rim': [
         { x: centerX - 240, y: centerY - 180 },
         { x: centerX + 220, y: centerY - 220 },
@@ -42,8 +39,6 @@ function GameBoard({ game, action, setAction, setGame }) {
         { x: centerX - 260, y: centerY + 120 },
         { x: centerX + 260, y: centerY - 120 }
       ],
-
-      // Mid Rim (meio - azul)
       'mid-rim': [
         { x: centerX - 400, y: centerY - 270 },
         { x: centerX + 370, y: centerY - 300 },
@@ -55,8 +50,6 @@ function GameBoard({ game, action, setAction, setGame }) {
         { x: centerX + 430, y: centerY - 100 },
         { x: centerX, y: centerY - 400 }
       ],
-
-      // Outer Rim (externo - amarelo)
       'outer-rim': [
         { x: centerX - 600, y: centerY - 330 },
         { x: centerX + 570, y: centerY - 360 },
@@ -141,8 +134,7 @@ function GameBoard({ game, action, setAction, setGame }) {
       }
 
       const updatedGame = await response.json();
-      console.log('Jogo atualizado após comprar carta:', updatedGame);
-      // setGame(updatedGame);
+      setGame(updatedGame);
     } catch (error) {
       console.error('Erro ao comprar carta:', error);
       alert('Erro ao se comunicar com o servidor.');
@@ -155,14 +147,13 @@ function GameBoard({ game, action, setAction, setGame }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
     ctx.lineWidth = 3;
     ctx.setLineDash([]);
@@ -180,11 +171,12 @@ function GameBoard({ game, action, setAction, setGame }) {
     });
   }, [arrangedPlanets]);
 
+
   return (
-    <div className="board-container">
+    <div className="board-container" ref={overlayRef}>
       <img src={backgroundImage} alt="Mapa Galáctico" className="board-background" />
 
-      <div className="board-overlay">
+      <div className="board-overlay" ref={overlayRef}>
         <canvas
           ref={canvasRef}
           className="connections-canvas"
@@ -211,7 +203,7 @@ function GameBoard({ game, action, setAction, setGame }) {
           <p className="deck-counter">Cartas restantes: {deck.length}</p>
         </div>
 
-        <button className="settings-button" onClick={() => setShowSettings(true)}>
+        <button className="settings-button" onClick={() => setShowSettings(true)} aria-label="Abrir Configurações">
           Configurações
         </button>
 
@@ -225,8 +217,10 @@ function GameBoard({ game, action, setAction, setGame }) {
 
         {showSettings && <Settings onClose={() => setShowSettings(false)} />}
       </div>
-    </div >
+    </div>
   );
 }
 
 export default GameBoard;
+
+

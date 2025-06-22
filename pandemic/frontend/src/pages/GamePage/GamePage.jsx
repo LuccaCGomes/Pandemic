@@ -36,11 +36,16 @@ function GamePage() {
       .catch(err => console.error("Erro ao enviar ação:", err));
   };
 
-  if (!game) return <div>Carregando jogo...</div>;
+  if (!game) return (
+    <div className="loading-screen">
+      <p>Carregando jogo...</p>
+    </div>
+  );
+
 
   return (
     <div className="game-container">
-      <Menu game={game} />
+      {/* <Menu game={game} /> */}
       <div className="game-content">
         <GameBoard game={game} setGame={setGame} action={action} setAction={setAction} />
         <PlayerPanel game={game} action={action} setAction={setAction} sendAction={sendAction} />

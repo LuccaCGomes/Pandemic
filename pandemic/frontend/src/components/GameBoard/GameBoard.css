@@ -1,38 +1,62 @@
 .board-container {
   position: relative;
-  padding-top: 100px;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   background: radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
   font-family: 'Orbitron', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
+
 
 .board-background {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
   width: 100%;
-  height: 100%;
   object-fit: cover;
   opacity: 0.15;
   z-index: 0;
+  transform: translate(-50%, -50%);
+}
+.board-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1600px;
+  height: 800px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
-.board-overlay {
+
+@media (max-width: 768px) {
+  .board-overlay {
+    width: 100%;
+    height: 600px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.board-overlay > * {
+  pointer-events: auto;
+}
+
+.connections-canvas {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.connections {
-  width: 100%;
-  height: 100%;
+  z-index: 0;
   pointer-events: none;
 }
+
 
 .main-layout {
   display: flex;
@@ -73,6 +97,18 @@
   font-size: 0.875rem;
   color: #a1a1aa;
 }
+
+@media (max-width: 768px) {
+  .draw-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .deck-counter {
+    font-size: 0.75rem;
+  }
+}
+
 
 .settings-button {
   position: absolute;
