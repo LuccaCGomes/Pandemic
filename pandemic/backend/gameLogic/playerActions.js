@@ -1,20 +1,58 @@
 /**
- * Moves a player to an adjacent planet.
- * This corresponds to the "Viajar para outro planeta (adjacente)" action.
+ * Moves a player to a target planet, checking for all valid move types:
+ * 1. Adjacent move
+ * 2. Direct Flight (by discarding the destination's card)
+ * 3. Shuttle Flight (between two Imperial Bases)
+ * This corresponds to the "Viajar para outro planeta (adjacente, por carta ou via base)" action.
  * @param {object} gameState - The current state of the game.
  * @param {object} player - The player performing the action.
  * @param {string} targetPlanetName - The name of the planet to move to.
- * @throws {Error} If the move is invalid.
+ * @throws {Error} If the move is invalid under all possible conditions.
  */
 function movePlayer(gameState, player, targetPlanetName) {
   const currentPlanet = gameState.planets.find(p => p.name === player.location);
+  const targetPlanet = gameState.planets.find(p => p.name === targetPlanetName);
 
-  if (!currentPlanet || !currentPlanet.connections.includes(targetPlanetName)) {
-    throw new Error('Invalid move. Target planet is not connected to the current location.');
+  if (!currentPlanet || !targetPlanet) {
+    throw new Error('Invalid planet name provided.');
   }
 
-  player.location = targetPlanetName;
-  gameState.log.push(`${player.name} moved to ${targetPlanetName}.`);
+  if (player.location === targetPlanetName) {
+    throw new Error('Player is already at the target location.');
+  }
+
+  // Condition 1: Adjacent Move
+  if (currentPlanet.connections.includes(targetPlanetName)) {
+    player.location = targetPlanetName;
+    gameState.log.push(`${player.name} moved to adjacent planet ${targetPlanetName}.`);
+    return; // Move successful
+  }
+
+  // Condition 2: Direct Flight (by discarding destination card)
+  const cardIndex = player.cards.findIndex(card => card.type === 'planet' && card.name === targetPlanetName);
+  if (cardIndex !== -1) {
+    player.location = targetPlanetName;
+    const discardedCard = player.cards.splice(cardIndex, 1)[0];
+
+    // Add the discarded card to a discard pile
+    if (!gameState.playerDiscardPile) {
+      gameState.playerDiscardPile = [];
+    }
+    gameState.playerDiscardPile.push(discardedCard);
+
+    gameState.log.push(`${player.name} discarded the ${targetPlanetName} card to perform a Direct Flight.`);
+    return; // Move successful
+  }
+
+  // Condition 3: Shuttle Flight (between two bases)
+  if (currentPlanet.hasBase && targetPlanet.hasBase) {
+    player.location = targetPlanetName;
+    gameState.log.push(`${player.name} traveled between Imperial Bases from ${currentPlanet.name} to ${targetPlanetName}.`);
+    return; // Move successful
+  }
+
+  // If no conditions are met, the move is invalid.
+  throw new Error('Invalid move. Target is not adjacent, player does not have the card, or there is no valid base connection.');
 }
 
 /**
