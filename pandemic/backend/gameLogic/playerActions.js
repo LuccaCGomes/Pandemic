@@ -1,5 +1,3 @@
-// gameLogic/playerActions.js
-
 /**
  * Moves a player to an adjacent planet.
  * This corresponds to the "Viajar para outro planeta (adjacente)" action.
