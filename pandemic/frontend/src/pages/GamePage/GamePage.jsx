@@ -39,7 +39,7 @@ function GamePage() {
 
   return (
     <div className="game-container">
-      {/* <Menu game={game} /> */}
+      <Menu game={game} />
       <div className="game-content">
         <GameBoard game={game} setGame={setGame} action={action} setAction={setAction} />
         <PlayerPanel game={game} action={action} setAction={setAction} sendAction={sendAction} />
