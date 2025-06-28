@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Menu from '../../components/Menu/Menu';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import PlayerPanel from '../../components/PlayerPanel/PlayerPanel';
+import { fetchGameState, makeAction } from '../../utils/api';
 import './GamePage.css';
 
 function GamePage() {
