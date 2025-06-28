@@ -9,8 +9,7 @@ function GamePage() {
   const [action, setAction] = useState({ type: '', targetPlanet: '' });
 
   useEffect(() => {
-    fetch('http://localhost:3001/game/state')
-      .then(res => res.json())
+    fetchGameState()
       .then(data => {
         setGame(data);
       })
@@ -20,15 +19,10 @@ function GamePage() {
   const sendAction = () => {
     if (!action.type || !action.targetPlanet) return;
 
-    fetch('http://localhost:3001/game/action', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type: action.type,
-        target: action.targetPlanet
-      })
+    makeAction({
+      type: action.type,
+      target: action.targetPlanet
     })
-      .then(res => res.json())
       .then(data => {
         setGame(data);
         setAction({ type: '', targetPlanet: '' });
@@ -41,7 +35,6 @@ function GamePage() {
       <p>Carregando jogo...</p>
     </div>
   );
-
 
   return (
     <div className="game-container">

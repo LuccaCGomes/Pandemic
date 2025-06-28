@@ -34,7 +34,7 @@ function handleAction(req, res) {
         if (player.location === target) {
           return res.status(400).json({ error: 'Você já está nesse planeta.' });
         }
-        if (game.planets[player.location].connections.includes(target)) {
+        if (game.planets[player.location].adjacent.includes(target)) {
           player.location = target;
           player.actionsTaken++;
           message = `${player.name} moveu-se para ${target}.`;

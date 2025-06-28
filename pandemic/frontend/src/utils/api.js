@@ -1,8 +1,8 @@
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
-export const fetchGameState = async (gameId) => {
+export const fetchGameState = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/game/${gameId}`);
+        const response = await fetch(`${API_BASE_URL}/game/state`);
         if (!response.ok) {
             throw new Error('Failed to fetch game state');
         }
@@ -32,21 +32,21 @@ export const startGame = async (gameData) => {
     }
 };
 
-export const makeMove = async (gameId, moveData) => {
+export const makeAction = async (actionData) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/game/${gameId}/move`, {
+        const response = await fetch(`${API_BASE_URL}/game/action`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(moveData),
+            body: JSON.stringify(actionData),
         });
         if (!response.ok) {
-            throw new Error('Failed to make move');
+            throw new Error('Failed to make action');
         }
         return await response.json();
     } catch (error) {
-        console.error('Error making move:', error);
+        console.error('Error making action:', error);
         throw error;
     }
 };

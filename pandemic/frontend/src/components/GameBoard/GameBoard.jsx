@@ -3,6 +3,7 @@ import Card from '../../components/Card/Card';
 import Planet from '../../components/Planet/Planet';
 import Deck from '../../components/Deck/Deck';
 import Settings from '../../components/Settings/Settings';
+import { makeAction } from '../../utils/api';
 import backgroundImage from '../../assets/background.jpg';
 import './GameBoard.css';
 
@@ -121,19 +122,7 @@ function GameBoard({ game, action, setAction, setGame }) {
 
   async function handleDrawAction() {
     try {
-      const response = await fetch('http://localhost:3001/game/action', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'draw' })
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        alert(error.error || 'Erro ao comprar carta.');
-        return;
-      }
-
-      const updatedGame = await response.json();
+      const updatedGame = await makeAction({ type: 'draw' });
       setGame(updatedGame);
     } catch (error) {
       console.error('Erro ao comprar carta:', error);
