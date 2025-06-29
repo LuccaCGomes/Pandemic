@@ -1,32 +1,34 @@
 // backend/utils/gameLogic.js
 
-function movePlayer(game, city) {
-    const player = game.players[game.currentPlayer];
-    const currentCity = game.cities[player.location];
+function suppressThreat(game) {
+  const player = game.players[game.currentPlayerIndex];
+  const planetName = player.location;
+  const planet = game.planets.find(p => p.name === planetName);
   
-    if (!currentCity.connections.includes(city)) {
-      throw new Error('Movimento inválido');
-    }
+  if (planet.threatLevel > 0) {
+    planet.threatLevel -= 1;
+    game.log.push(`${player.name} reprimiu ameaças rebeldes em ${planetName}`);
+  } else {
+    throw new Error('Nenhuma ameaça para reprimir neste planeta');
+  }
+}
+
+function useCard(game, cardName) {
+  const player = game.players[game.currentPlayerIndex];
+  const cardIndex = player.cards.findIndex(card => card.name === cardName);
   
-    player.location = city;
-    game.log.push(`${player.name} moveu para ${city}`);
+  if (cardIndex === -1) {
+    throw new Error('Carta não encontrada na mão do jogador');
   }
   
-  function treatDisease(game) {
-    const player = game.players[game.currentPlayer];
-    const cityName = player.location;
-    const diseaseLevel = game.cities[cityName].disease;
+  const card = player.cards.splice(cardIndex, 1)[0];
+  game.log.push(`${player.name} utilizou a carta "${card.name}"`);
   
-    if (diseaseLevel > 0) {
-      game.cities[cityName].disease -= 1;
-      game.log.push(`${player.name} tratou a doença em ${cityName}`);
-    } else {
-      throw new Error('Nenhuma doença para tratar aqui');
-    }
-  }
-  
-  module.exports = {
-    movePlayer,
-    treatDisease
-  };
+  return card;
+}
+
+module.exports = {
+  suppressThreat,
+  useCard
+};
   

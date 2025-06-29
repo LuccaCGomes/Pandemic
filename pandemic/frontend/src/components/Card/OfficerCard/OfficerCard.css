@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.officer-card {
+  width: 120px;
+  height: 180px;
+  background-color: #1a1a1a;
+  border: 2px solid #ff0000;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
+  color: #ff0000;
+  font-family: 'Share Tech Mono', monospace;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.officer-card h3 {
+  font-size: 0.85rem;
+  margin: 0;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.officer-card p {
+  font-size: 0.7rem;
+  margin: 4px 0;
+  line-height: 1.2;
+}
+
+.officer-card::after {
+  content: '';
+  background-image: url('/assets/empireLogo.svg'); /* ajuste o caminho */
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 4px;
+}

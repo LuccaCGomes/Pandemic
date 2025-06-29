@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import empireLogo from '../../../assets/empireLogo.svg';
-import starwarsLogo from '../../../assets/starwarsLogo.svg';
+import empireLogo from '../../assets/empireLogo.svg';
+import starwarsLogo from '../../assets/starwarsLogo.svg';
+import imperialOfficers from '../../utils/imperialOfficersCopy'; // corrigir esse import, está apenas mockado para o protótipo
 import './MainPage.css';
 
 function MainPage() {
   const [numPlayers, setNumPlayers] = useState(2);
-  const [players, setPlayers] = useState([{ name: '', role: '' }, { name: '', role: '' }]);
+  const [players, setPlayers] = useState([{ name: '' }, { name: '' }]);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const availableRoles = ['Comandante', 'Estratégico', 'Tático', 'Espião'];
 
@@ -22,17 +24,31 @@ function MainPage() {
     setPlayers(updated);
   };
 
+  const shuffleArray = (array) => {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+
   const startGame = async () => {
+    const shuffledOfficers = shuffleArray(imperialOfficers).slice(0, numPlayers);
+
+    const playersWithRoles = players.map((p, i) => ({
+      name: p.name,
+      role: shuffledOfficers[i],
+    }));
+
     try {
       const response = await fetch('http://localhost:3001/game/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ players }),
+        body: JSON.stringify({ players: playersWithRoles }),
       });
 
-      if (!response.ok) {
-        throw new Error('Erro ao iniciar o jogo');
-      }
+      if (!response.ok) throw new Error('Erro ao iniciar o jogo');
 
       const data = await response.json();
       console.log(data.message);
@@ -42,8 +58,6 @@ function MainPage() {
       alert('Não foi possível iniciar o jogo. Verifique os dados e tente novamente.');
     }
   };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="main-container">
@@ -79,21 +93,11 @@ function MainPage() {
                   value={p.name}
                   onChange={(e) => handleChange(i, 'name', e.target.value)}
                 />
-                <select
-                  className="player-role-select"
-                  value={p.role}
-                  onChange={(e) => handleChange(i, 'role', e.target.value)}
-                >
-                  <option value="">Escolha uma função</option>
-                  {availableRoles.map((role, index) => (
-                    <option key={index} value={role}>
-                      {role}
-                    </option>
-                  ))}
-                </select>
               </div>
             ))}
-            <button onClick={startGame}>Iniciar Jogo</button>
+            <button onClick={startGame} disabled={players.some(p => !p.name.trim())}>
+              Iniciar Jogo
+            </button>
           </div>
         </div>
       )}
