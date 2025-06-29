@@ -5,7 +5,7 @@
   padding: 20px;
   color: #00e0ff;
   font-family: 'Orbitron', sans-serif;
-  width: 300px;
+  width: 100%;
   box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
 }
 
@@ -22,18 +22,11 @@
   color: #ccc;
 }
 
-.player-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 10px 0 20px;
-}
 
 .card {
   background: #1a1a1a;
   border: 1px solid #00e0ff;
   border-radius: 8px;
-  width: 70px;
   padding: 4px;
   text-align: center;
   box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
@@ -90,3 +83,193 @@ button:disabled {
 }
 /* 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap'); */
+
+/* PlayerPanel - menu inferior horizontal fixo */
+.playerpanel-root {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 20px; 
+  width: 100%;
+  min-height: 120px;
+  padding: 20px;
+  background: rgba(24,24,27,0.7); /* fundo transparente */
+  border-top: 2px solid #222;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+}
+
+.playerpanel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  color: #00e0ff;
+  font-size: 1.05em;
+  font-family: 'Orbitron', sans-serif;
+}
+.playerpanel-info span {
+  margin-bottom: 2px;
+}
+
+.playerpanel-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  background: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 0;
+  max-width: 60vw;
+  overflow-x: auto;
+}
+
+.playerpanel-cards .custom-card {
+  background: linear-gradient(135deg, #23232b 70%, #18181b 100%);
+  color: #fff;
+  border: 2px solid #00e0ff;
+  box-shadow: 0 0 16px rgba(0,224,255,0.25);
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.playerpanel-cards .card-name {
+  color: #00e0ff;
+  font-size: 1.15em;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.playerpanel-cards .card-type {
+  color: #ffe066;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.playerpanel-cards .card-region {
+  color: #00e0ff;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.playerpanel-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 100%;
+}
+
+.playerpanel-action-buttons-multiline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+  width: 100%;
+}
+
+.playerpanel-action-btn-row {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  justify-content: center;
+  width: 100%;
+}
+
+.playerpanel-conditional-inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.playerpanel-conditional-inputs select,
+.playerpanel-conditional-inputs input {
+  width: 100%;
+  max-width: 260px;
+  box-sizing: border-box;
+}
+
+.playerpanel-action-btn.confirm {
+  background: linear-gradient(90deg, #ca8a04 60%, #facc15 100%);
+  color: #18181b;
+  margin-left: 0;
+  margin-top: 8px;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 2px 8px rgba(250,204,21,0.10);
+  width: 100%;
+  max-width: 180px;
+  display: block;
+  font-size: 1em;
+  padding: 6px 0;
+}
+
+.playerpanel-action-btn {
+  background: linear-gradient(90deg, #00e0ff 60%, #00bcd4 100%);
+  color: #18181b;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(0,224,255,0.10);
+  outline: none;
+  font-size: 0.98em;
+  position: relative;
+  min-width: 90px;
+  max-width: 150px;
+}
+
+.playerpanel-action-btn.selected,
+.playerpanel-action-btn:focus {
+  background: linear-gradient(90deg, #facc15 60%, #ffe066 100%);
+  color: #18181b;
+  box-shadow: 0 0 0 2px #facc15, 0 2px 12px rgba(250,204,21,0.18);
+  z-index: 1;
+}
+
+.playerpanel-action-btn:disabled {
+  background: #444;
+  color: #bbb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.playerpanel-action-btn:hover:not(:disabled):not(.selected) {
+  background: linear-gradient(90deg, #00bcd4 60%, #00e0ff 100%);
+  color: #fff;
+}
+
+/* Ajuste para o conteúdo da página não ficar escondido atrás do painel fixo */
+.gamepage-main {
+  margin-bottom: 140px;
+}
+
+@media (max-width: 600px) {
+  .playerpanel-action-btn-row {
+    flex-direction: column;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .playerpanel-action-buttons-multiline {
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .playerpanel-conditional-inputs select,
+  .playerpanel-conditional-inputs input {
+    max-width: 98vw;
+  }
+}

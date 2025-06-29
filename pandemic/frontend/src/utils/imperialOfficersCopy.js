@@ -1,4 +1,4 @@
-const imperialOfficers = [
+const imperialOfficersCopy = [
     {
       id: "commander",
       nome: "Comandante da Frota",
@@ -42,5 +42,5 @@ const imperialOfficers = [
       efeito: "Realiza 5 ações por turno."
     }
   ];
-
-  module.exports = imperialOfficers;
+  
+  export default imperialOfficersCopy;
