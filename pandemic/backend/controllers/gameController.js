@@ -1,151 +1,143 @@
+// Import the new player action functions
+const playerActions = require('../gameLogic/playerActions');
+
 function getGameState(req, res) {
-  if (!req.gameState) {
-    return res.status(404).json({ error: 'Jogo não encontrado.' });
+  // This function remains the same.
+  if (!req.app.locals.gameState) {
+    return res.status(404).json({ error: 'Game not found.' });
   }
-  res.json(req.gameState);
+  res.json(req.app.locals.gameState);
 }
 
 function handleAction(req, res) {
-  const { type, target } = req.body;
-  const game = req.gameState;
-  const player = game.players[game.currentPlayer];
+  const { type, ...params } = req.body;
+  const game = req.app.locals.gameState; // Using gameState from app.locals
+
+  if (!game) {
+    return res.status(404).json({ error: 'Game not found.' });
+  }
+
+  const player = game.players[game.currentPlayerIndex];
 
   if (!type) {
-    return res.status(400).json({ error: 'Tipo de ação é necessário.' });
+    return res.status(400).json({ error: 'Action type is required.' });
   }
 
   if (game.status === 'VICTORY' || game.status === 'DEFEAT') {
-    return res.status(400).json({ error: 'O jogo já terminou.' });
+    return res.status(400).json({ error: 'The game is over.' });
   }
 
+  // Initialize phase and actions if they don't exist
   if (!game.phase) game.phase = 'ACTIONS';
   if (player.actionsTaken === undefined) player.actionsTaken = 0;
 
-  let message = '';
-
+  // --- ACTION PHASE ---
   if (game.phase === 'ACTIONS') {
     if (player.actionsTaken >= 4) {
       game.phase = 'DRAW_CARDS';
-      return res.json({ message: 'Fase de compra iniciada.' });
+      // Automatically proceed to the next phase, no action needed from the user.
+      return res.json({ message: 'Action limit reached. Proceeding to Draw Cards phase.' });
     }
 
-    switch (type) {
-      case 'move': {
-        if (player.location === target) {
-          return res.status(400).json({ error: 'Você já está nesse planeta.' });
-        }
-        if (game.planets[player.location].adjacent.includes(target)) {
-          player.location = target;
-          player.actionsTaken++;
-          message = `${player.name} moveu-se para ${target}.`;
-        } else {
-          return res.status(400).json({ error: 'Movimento inválido. Conexão não encontrada.' });
-        }
-        break;
+    try {
+      switch (type) {
+        case 'move':
+          // The 'target' planet is in params.targetPlanetName
+          playerActions.movePlayer(game, player, params.targetPlanetName);
+          break;
+
+        case 'eliminateRebels': // Renamed from 'attack' for clarity
+          playerActions.eliminateRebels(game, player);
+          break;
+
+        case 'buildBase':
+          playerActions.buildImperialBase(game, player);
+          break;
+
+        case 'shareInfo':
+          // Requires targetPlayerName and card object from the request body
+          const targetPlayer = game.players.find(p => p.name === params.targetPlayerName);
+          if (!targetPlayer) throw new Error('Target player not found.');
+          playerActions.shareInformation(game, player, targetPlayer, params.card);
+          break;
+
+        case 'neutralizeRebellion':
+          // Requires region from the request body
+          playerActions.neutralizeRebellion(game, player, params.region);
+          break;
+
+        // Note: The 'useCard' action from the original file is not in the manual's main actions.
+        // It could be an event card. We can add it back if needed.
+
+        default:
+          return res.status(400).json({ error: 'Unknown action type.' });
       }
 
-      case 'attack': {
-        const threat = game.planets[player.location].threatLevel;
-        if (threat > 0) {
-          game.planets[player.location].threatLevel -= 1;
-          player.actionsTaken++;
-          message = `${player.name} reprimiu ameaças rebeldes em ${player.location}.`;
-        } else {
-          return res.status(400).json({ error: 'Nenhuma ameaça para atacar.' });
-        }
-        break;
-      }
+      player.actionsTaken++; // Increment action counter on success
 
-      case 'useCard': {
-        const cardIndex = player.hand.findIndex(c => c === target);
-        if (cardIndex !== -1) {
-          const card = player.hand.splice(cardIndex, 1)[0];
-          player.actionsTaken++;
-          message = `${player.name} utilizou a carta "${card}".`;
-        } else {
-          return res.status(400).json({ error: 'Carta não encontrada.' });
-        }
-        break;
-      }
-
-      default:
-        return res.status(400).json({ error: 'Tipo de ação desconhecido.' });
+    } catch (error) {
+      // If any action function throws an error, catch it and send a bad request response.
+      return res.status(400).json({ error: error.message });
     }
   }
 
-  else if (game.phase === 'DRAW_CARDS') {
-    const drawnCards = [];
+  // --- OTHER PHASES (DRAW_CARDS, REVEAL_REBEL, etc.) ---
+  if (game.phase === 'DRAW_CARDS') {
+    // Each player draws 2 cards from the player deck
+    if (!game.playerDeck || game.playerDeck.length < 2) {
+      game.status = 'DEFEAT';
+      return res.json({ message: 'No more cards to draw. Game over!', game });
+    }
     for (let i = 0; i < 2; i++) {
-      if (game.deck.length === 0) {
-        game.status = 'DEFEAT';
-        return res.json({ message: 'Fim do jogo: sem cartas para comprar.' });
-      }
-      const card = game.deck.shift();
-      if (card === 'Levante Rebelde') {
-        game.rebellionProgress = (game.rebellionProgress || 2) + 1;
-        game.rebelDiscardPile = shuffle([...game.rebelDiscardPile, ...game.rebelDeck]);
-        game.rebelDeck = game.rebelDiscardPile;
-        game.rebelDiscardPile = [];
-        message += `Carta de Levante Rebelde ativada. `;
-      } else {
-        player.hand.push(card);
-        message += `${player.name} comprou a carta "${card}". `;
-      }
+      const card = game.playerDeck.shift();
+      player.cards.push(card);
+      game.log.push(`${player.name} drew a card: ${card.name}`);
     }
     game.phase = 'REVEAL_REBEL';
+    return res.json({ message: 'Cards drawn. Proceeding to Reveal Rebel phase.', game });
   }
 
-  else if (game.phase === 'REVEAL_REBEL') {
-    const numberToReveal = game.rebellionProgress || 2;
-    for (let i = 0; i < numberToReveal; i++) {
-      if (game.rebelDeck.length === 0) break;
-      const card = game.rebelDeck.shift();
-      const planet = game.planets[card];
-      if (!planet) continue;
-
-      if (!planet.rebellionCubes) planet.rebellionCubes = 0;
-
-      if (planet.rebellionCubes >= 3) {
-        game.revoltMarker = (game.revoltMarker || 0) + 1;
-        message += `Revolta em ${card}! Marcador de revolta agora em ${game.revoltMarker}. `;
-        if (game.revoltMarker >= 8) {
-          game.status = 'DEFEAT';
-          return res.json({ message: 'O Império perdeu: revoltas em excesso.' });
-        }
-      } else {
-        planet.rebellionCubes++;
-        message += `Cubo rebelde adicionado em ${card}. `;
+  if (game.phase === 'REVEAL_REBEL') {
+    // Reveal rebel cards (simulate drawing 2 rebel cards)
+    if (!game.rebelDeck || game.rebelDeck.length < 2) {
+      game.status = 'DEFEAT';
+      return res.json({ message: 'No more rebel cards to reveal. Game over!', game });
+    }
+    for (let i = 0; i < 2; i++) {
+      const rebelCard = game.rebelDeck.shift();
+      // Find the planet and increase threat
+      const planet = game.planets.find(p => p.name === rebelCard.name);
+      if (planet) {
+        planet.threatLevel = (planet.threatLevel || 0) + 1;
+        game.remainingThreats = (game.remainingThreats || 0) + 1;
+        game.log.push(`Rebel activity increased in ${planet.name}.`);
       }
     }
     game.phase = 'CHECK_END';
+    return res.json({ message: 'Rebel cards revealed. Proceeding to Check End phase.', game });
   }
 
-  else if (game.phase === 'CHECK_END') {
-    // Verifica vitória (4 regiões neutralizadas, por exemplo)
-    if (game.victoryConditionsMet) {
+  if (game.phase === 'CHECK_END') {
+    // Check for victory or defeat conditions
+    // Example: Victory if all rebellions neutralized
+    if (game.rebellionsNeutralized && Object.values(game.rebellionsNeutralized).every(v => v)) {
       game.status = 'VICTORY';
-      return res.json({ message: 'O Império venceu!' });
+      return res.json({ message: 'All rebellions neutralized! Victory!', game });
     }
-    game.currentPlayer = (game.currentPlayer + 1) % game.players.length;
-    if (game.currentPlayer === 0) game.turn += 1;
-    game.players[game.currentPlayer].actionsTaken = 0;
+    // Example: Defeat if threat cubes run out
+    if (game.remainingThreats >= game.maxThreats) {
+      game.status = 'DEFEAT';
+      return res.json({ message: 'Too many threats! Defeat!', game });
+    }
+    // Otherwise, next player's turn
+    game.currentPlayerIndex = (game.currentPlayerIndex + 1) % game.players.length;
+    game.players[game.currentPlayerIndex].actionsTaken = 0;
     game.phase = 'ACTIONS';
-    message += `Novo turno iniciado: jogador ${game.players[game.currentPlayer].name}`;
+    return res.json({ message: "Next player's turn.", game });
   }
-
-  game.log.push(`[Turno ${game.turn}] ${message}`);
-  res.json(game);
-}
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
 }
 
 module.exports = {
   getGameState,
-  handleAction
+  handleAction,
 };
