@@ -3,7 +3,6 @@ import React from 'react';
 import './Planet.css';
 
 const Planet = ({ planet, onClick }) => {
-  console.log(planet)
 
   const planetColors = {
     'Deep Core': 'white',

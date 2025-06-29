@@ -1,34 +1,66 @@
 .custom-card {
-  width: 96px;
-  height: 144px;
-  background-color: #1a1a1a;
+  width: 110px;
+  height: 160px;
+  background: linear-gradient(135deg, #1a1a1a 60%, #222 100%);
   border: 2px solid #ff0000;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+  border-radius: 14px;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
   color: #ff0000;
-  padding: 8px;
+  padding: 10px 6px 8px 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-family: 'Share Tech Mono', monospace;
   text-align: center;
   box-sizing: border-box;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 4px;
+}
+
+.custom-card:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 24px rgba(255, 0, 0, 0.7);
 }
 
 .card-type {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: bold;
   color: #ff0000;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
 }
 
 .card-name {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
 }
 
 .card-effect {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   margin-top: 4px;
-  line-height: 1.1;
+  line-height: 1.2;
+  color: #ffe066;
+  font-style: italic;
+}
+
+.card-region {
+  font-size: 0.7rem;
+  margin-top: 2px;
+  color: #00e0ff;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .custom-card {
+    width: 80px;
+    height: 120px;
+    font-size: 0.85em;
+    padding: 6px 2px 4px 2px;
+  }
+  .card-name {
+    font-size: 0.85rem;
+  }
 }

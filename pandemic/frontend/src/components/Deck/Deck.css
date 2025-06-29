@@ -1,8 +1,11 @@
 .deck-container {
-    position: absolute;
     bottom: 16px;
     right: 16px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
   }
   

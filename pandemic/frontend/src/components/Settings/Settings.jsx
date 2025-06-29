@@ -1,32 +1,24 @@
 import React from 'react';
-import './Settings.css'; // Criaremos este arquivo CSS
+import './Settings.css';
 
-function Settings({ isOpen, onClose }) {
-  if (!isOpen) {
-    return null;
-  }
-
+function Settings({ onClose }) {
+  // O modal é exibido sempre que renderizado
   const handleModalContentClick = (e) => {
     e.stopPropagation();
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}> {/* Overlay que cobre a tela */}
-      <div className="modal-content" onClick={handleModalContentClick}> {/* Conteúdo do modal */}
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={handleModalContentClick}>
         <div className="modal-header">
           <h2 className="modal-title">Configurações</h2>
-          <button className="modal-close-button" onClick={onClose}>
-            &times; {/* Ícone "X" para fechar */}
+          <button className="modal-close-button" onClick={onClose} aria-label="Fechar">
+            &times;
           </button>
         </div>
         <div className="modal-body">
           <p>Aqui você poderá configurar regras do jogo futuramente.</p>
           {/* Adicione mais opções de configuração aqui conforme necessário */}
-        </div>
-        <div className="modal-footer">
-          <button className="modal-action-button" onClick={onClose}>
-            Fechar
-          </button>
         </div>
       </div>
     </div>

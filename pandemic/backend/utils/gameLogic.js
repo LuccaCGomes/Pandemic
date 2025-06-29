@@ -1,17 +1,5 @@
 // backend/utils/gameLogic.js
 
-function movePlayer(game, planetName) {
-  const player = game.players[game.currentPlayerIndex];
-  const currentPlanet = game.planets.find(p => p.name === player.location);
-  
-  if (!currentPlanet.adjacent.includes(planetName)) {
-    throw new Error('Movimento inválido - planeta não adjacente');
-  }
-  
-  player.location = planetName;
-  game.log.push(`${player.name} moveu para ${planetName}`);
-}
-
 function suppressThreat(game) {
   const player = game.players[game.currentPlayerIndex];
   const planetName = player.location;
@@ -40,7 +28,6 @@ function useCard(game, cardName) {
 }
 
 module.exports = {
-  movePlayer,
   suppressThreat,
   useCard
 };

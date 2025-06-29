@@ -4,31 +4,34 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente */
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
     display: flex;
     align-items: center; /* Centraliza verticalmente */
     justify-content: center; /* Centraliza horizontalmente */
     z-index: 1000; /* Garante que o modal fique na frente de outros elementos */
     font-family: 'Orbitron', sans-serif; /* Usando a fonte do GameBoard como exemplo */
+    padding: 16px;
   }
   
   .modal-content {
-    background-color: #1e1e2f; /* Um fundo escuro temático */
-    color: #e0e0e0; /* Texto claro */
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    min-width: 300px;
-    max-width: 500px;
-    z-index: 1001;
-    border: 1px solid #00e0ff; /* Borda neon para combinar com o GameBoard */
-    animation: fadeInModal 0.3s ease-out;
+    background: linear-gradient(135deg, #1e1e2f 80%, #23234a 100%);
+    color: #e0e0e0;
+    padding: 28px 22px 22px 22px;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0, 224, 255, 0.13), 0 5px 15px rgba(0, 0, 0, 0.5);
+    min-width: 320px;
+    max-width: 96vw;
+    width: 100%;
+    max-width: 420px;
+    border: 2px solid #00e0ff;
+    animation: fadeInModal 0.28s cubic-bezier(.4,1.4,.6,1) both;
+    position: relative;
   }
   
   @keyframes fadeInModal {
     from {
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.92);
     }
     to {
       opacity: 1;
@@ -40,35 +43,38 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #3a3a5a;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    border-bottom: 1px solid #00e0ff33;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
   }
   
   .modal-title {
     margin: 0;
-    font-size: 1.8em;
+    font-size: 1.5em;
     color: #00e0ff;
+    letter-spacing: 1px;
   }
   
   .modal-close-button {
     background: none;
     border: none;
     font-size: 2em;
-    color: #a0a0c0;
+    color: #00e0ffcc;
     cursor: pointer;
-    padding: 0;
+    padding: 0 2px;
     line-height: 1;
+    transition: color 0.2s;
   }
   
   .modal-close-button:hover {
-    color: #ffffff;
+    color: #facc15;
   }
   
   .modal-body {
-    margin-bottom: 20px;
-    font-size: 1em;
-    line-height: 1.6;
+    margin-bottom: 0;
+    font-size: 1.08em;
+    line-height: 1.7;
+    color: #e0e0e0;
   }
   
   .modal-footer {
@@ -96,4 +102,15 @@
   
   .modal-action-button:focus {
     outline: 2px solid #fde047;
+  }
+
+  @media (max-width: 600px) {
+    .modal-content {
+      min-width: 0;
+      max-width: 98vw;
+      padding: 16px 4vw 12px 4vw;
+    }
+    .modal-title {
+      font-size: 1.1em;
+    }
   }

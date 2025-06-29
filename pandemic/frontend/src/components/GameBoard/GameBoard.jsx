@@ -8,7 +8,7 @@ import backgroundImage from '../../assets/background.jpg';
 import './GameBoard.css';
 
 function GameBoard({ game, action, setAction, setGame }) {
-  const { planets, players, currentPlayerIndex, deck } = game;
+  const { planets, players, currentPlayerIndex, playerDeck } = game;
   const currentPlayer = players[currentPlayerIndex];
   const [showSettings, setShowSettings] = useState(false);
 
@@ -166,7 +166,9 @@ function GameBoard({ game, action, setAction, setGame }) {
     const drawnConnections = new Set();
 
     arrangedPlanets.forEach((planet) => {
-      planet.adjacent?.forEach((neighborName) => {
+      // Usa 'connections' se existir, senão 'adjacent'
+      const neighbors = planet.connections || planet.adjacent || [];
+      neighbors.forEach((neighborName) => {
         const neighbor = arrangedPlanets.find(p => normalize(p.name) === normalize(neighborName));
         if (neighbor) {
           const pairKey = [normalize(planet.name), normalize(neighbor.name)].sort().join('-');
@@ -182,50 +184,44 @@ function GameBoard({ game, action, setAction, setGame }) {
     });
   }, [arrangedPlanets]);
 
+  const handleShowSettings = () => {
+    setShowSettings(prev => !prev);
+  };
+
   return (
     <div className="board-container" ref={overlayRef}>
       <img src={backgroundImage} alt="Mapa Galáctico" className="board-background" />
-
-      <div className="board-overlay">
-        <canvas
-          ref={canvasRef}
-          className="connections-canvas"
-          style={{ position: 'absolute', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}
-        ></canvas>
-
-        {arrangedPlanets.map((planet) => (
-          <Planet
-            key={planet.name}
-            planet={planet}
-            onClick={(name) => setAction({ ...action, targetPlanet: name })}
-          />
-        ))}
-      </div>
-
-      <div className="action-panel">
-        <div className="draw-section">
-          <div className="deck">
-            <Deck remainingCards={deck.length} />
-          </div>
-          <button onClick={handleDrawAction} className="draw-button">
-            Comprar Carta
-          </button>
-          <p className="deck-counter">Cartas restantes: {deck.length}</p>
-        </div>
-
-        <button className="settings-button" onClick={() => setShowSettings(true)} aria-label="Abrir Configurações">
-          Configurações
-        </button>
-
-        {/* <div className="ingame-cards">
-          {currentPlayer.cards.map((card, index) => (
-            <div key={index} className="card">
-              <Card key={index} card={card} />
-            </div>
+      <div className="board-area">
+        <div className="board-overlay">
+          <canvas
+            ref={canvasRef}
+            className="connections-canvas"
+            style={{ position: 'absolute', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}
+          ></canvas>
+          {arrangedPlanets.map((planet) => (
+            <Planet
+              key={planet.name}
+              planet={planet}
+              onClick={() => setAction({ type: 'move', params: { targetPlanetName: planet.name } })}
+            />
           ))}
-        </div> */}
-
-        {showSettings && <Settings onClose={() => setShowSettings(false)} />}
+        </div>
+      </div>
+      <div className="side-panel">
+        <div className="deck-section">
+          <Deck remainingCards={playerDeck ? playerDeck.length : 0} />
+          <button className="settings-button" onClick={handleShowSettings} aria-label="Abrir Configurações">
+            Configurações
+          </button>
+          <div className="ingame-cards">
+            {currentPlayer.cards.map((card, index) => (
+              <div key={index} className="card">
+                <Card key={index} card={card} />
+              </div>
+            ))}
+          </div>
+        </div>
+        {showSettings && <Settings onClose={handleShowSettings} />}
       </div>
     </div>
   );
