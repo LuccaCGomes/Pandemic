@@ -202,6 +202,8 @@ function GameBoard({ game, action, setAction, setGame }) {
             <Planet
               key={planet.name}
               planet={planet}
+              player={currentPlayer}
+              action={action}
               onClick={() => setAction({ type: 'move', params: { targetPlanetName: planet.name } })}
             />
           ))}

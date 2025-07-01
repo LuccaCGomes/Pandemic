@@ -19,7 +19,12 @@ function PlayerPanel({ game, action, setAction, sendAction }) {
           <Card key={idx} card={card} />
         ))}
       </div>
+
       <div className="playerpanel-actions">
+        <div className="playerpanel-selectedplanet">
+          <span className="playerpanel-selectedplanet-title">Planeta Selecionado:</span>
+          <span className="playerpanel-selectedplanet-name">{action.params.targetPlanetName}</span>
+        </div>
         <div className="playerpanel-action-buttons-multiline">
           {[
             [
