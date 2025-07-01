@@ -1,5 +1,4 @@
 const express = require('express');
-const express = require('express');
 const router = express.Router();
 const { getGameState, handleAction } = require('../controllers/gameController');
 const initGame = require('../gameLogic/initGame');
