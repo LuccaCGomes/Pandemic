@@ -1,0 +1,72 @@
+.planet {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75px; 
+  height: 75px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s;
+  padding: 0;
+}
+
+.planet-player {
+  background-color: green !important;
+}
+
+.planet:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.9);
+}
+
+.threat {
+  display: block;
+  font-size: 0.7rem;
+  color: red;
+  margin-top: 2px;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+.planet-border-deepcore {
+  border-color: white;
+}
+
+.planet-border-innerrim {
+  border-color: red;
+}
+
+.planet-border-midrim {
+  border-color: blue;
+}
+
+.planet-border-outerrim {
+  border-color: yellow;
+}
+
+.planet-selected {
+  background: linear-gradient(135deg, #ffe066 60%, #facc15 100%) !important;
+  color: #18181b;
+  border-width: 3px;
+  box-shadow: 0 0 18px 4px rgba(250, 204, 21, 0.25);
+  z-index: 2;
+}
+

@@ -1,0 +1,68 @@
+/* Layout principal */
+.gamepage-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+  font-family: 'Orbitron', sans-serif;
+}
+
+.gamepage-header {
+  flex: 0 0 auto;
+  background: #18181b;
+  color: #00e0ff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  padding: 1rem 0;
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  text-align: center;
+  font-size: 1.25em;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+}
+
+.gamepage-main {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+}
+
+.gamepage-footer {
+  flex: 0 0 auto;
+  background: #18181b;
+  color: #fff;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+  padding: 0.5rem 0 0.5rem 0;
+  z-index: 10;
+  position: sticky;
+  bottom: 0;
+}
+
+.loading-screen {
+  color: white;
+  font-size: 1.5rem;
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
+  margin-top: 100px;
+}
+
+@media (max-width: 768px) {
+  .gamepage-main {
+    padding: 0;
+    align-items: flex-start;
+  }
+  .gamepage-header {
+    font-size: 1em;
+    padding: 0.6rem 0;
+    min-height: 44px;
+  }
+} 
