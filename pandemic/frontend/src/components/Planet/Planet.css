@@ -1,6 +1,10 @@
 .planet {
   position: absolute;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 75px; 
   height: 75px;
   background-color: rgba(0, 0, 0, 0.7);
@@ -8,13 +12,15 @@
   border-radius: 50%;
   color: white;
   font-size: 0.8rem;
+  text-align: center;
   cursor: pointer;
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
   transition: transform 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 0;
+}
+
+.planet-player {
+  background-color: green !important;
 }
 
 .planet:hover {
@@ -39,3 +45,28 @@
     opacity: 0.6;
   }
 }
+
+.planet-border-deepcore {
+  border-color: white;
+}
+
+.planet-border-innerrim {
+  border-color: red;
+}
+
+.planet-border-midrim {
+  border-color: blue;
+}
+
+.planet-border-outerrim {
+  border-color: yellow;
+}
+
+.planet-selected {
+  background: linear-gradient(135deg, #ffe066 60%, #facc15 100%) !important;
+  color: #18181b;
+  border-width: 3px;
+  box-shadow: 0 0 18px 4px rgba(250, 204, 21, 0.25);
+  z-index: 2;
+}
+
